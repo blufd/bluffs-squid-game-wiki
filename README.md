@@ -20,4 +20,6 @@ You can view the live version of the wiki here:
 
 ---
 
-## AI helped with this project, do not take this seriously its a hobby project!
+## AI helped with this project, do not take this seriously as its a hobby project!
+
+
