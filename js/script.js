@@ -15,31 +15,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalImg = document.getElementById("modalImage");
     const captionText = document.getElementById("modalCaption");
     const galleryImages = document.querySelectorAll(".gallery-image");
+    const portraitImage = document.querySelector(".infobox-image"); // <- add portrait
 
-    // Only run this code if there are gallery images on the page
+    // Function to open modal
+    function openModal(img, caption = "") {
+        modal.style.display = "block";
+        modalImg.src = img.src;
+        captionText.innerHTML = caption || img.alt || "";
+    }
+
+    // --- Gallery images ---
     if (galleryImages.length > 0) {
         galleryImages.forEach(img => {
             img.onclick = function() {
-                modal.style.display = "block";
-                modalImg.src = this.src;
-                // Find the figcaption associated with the clicked image
-                captionText.innerHTML = this.nextElementSibling.innerHTML;
+                const figcaption = this.nextElementSibling ? this.nextElementSibling.innerHTML : "";
+                openModal(this, figcaption);
             }
         });
+    }
 
-        // Get the <span> element that closes the modal
-        const closeBtn = document.querySelector(".close-button");
+    // --- Portrait image ---
+    if (portraitImage) {
+        portraitImage.addEventListener("click", () => {
+            openModal(portraitImage, portraitImage.alt);
+        });
+    }
 
-        // When the user clicks on <span> (x), close the modal
+    // Close modal (X button)
+    const closeBtn = document.querySelector(".close-button");
+    if (closeBtn) {
         closeBtn.onclick = function() {
             modal.style.display = "none";
         }
-        
-        // Also close modal if user clicks on the background
-        modal.onclick = function(event) {
-            if (event.target == modal) {
-                 modal.style.display = "none";
-            }
+    }
+
+    // Close modal when clicking outside
+    modal.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
         }
     }
 });
